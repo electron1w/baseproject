@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.zhwen.dao.OperlogsMapper">
+    <resultMap id="BaseResultMap" type="top.zhwen.domain.Operlogs">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="loginName" jdbcType="VARCHAR" property="loginname"/>
+        <result column="operTime" jdbcType="TIMESTAMP" property="opertime"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
+        <result column="ip" jdbcType="VARCHAR" property="ip"/>
+        <result column="types" jdbcType="INTEGER" property="types"/>
+        <result column="orderId" jdbcType="BIGINT" property="orderid"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id, loginName, operTime, content, ip, types, orderId
+  </sql>
+    <select id="selectByExample" parameterType="top.zhwen.domain.OperlogsExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        'true' as QUERYID,
+        <include refid="Base_Column_List"/>
+        from sys_operlogs
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByOrderId" parameterType="java.lang.Long" resultType="top.zhwen.vo.OperlogsVO">
+    select
+    SUBSTRING_INDEX(content, "|", 1) title,
+    REVERSE(SUBSTRING_INDEX(REVERSE(SUBSTRING_INDEX(content, "|", 2)), "|", 1)) content,
+    REVERSE(SUBSTRING_INDEX(REVERSE(SUBSTRING_INDEX(content, "|", 3)), "|", 1)) status,
+    date_format(operTime,'%Y-%m-%d %T') operTime
+    from sys_operlogs
+    where orderid = #{id,jdbcType=BIGINT} and  types='2'
+    order by id DESC
+  </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_operlogs
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sys_operlogs
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <delete id="deleteByExample" parameterType="top.zhwen.domain.OperlogsExample">
+        delete from sys_operlogs
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="top.zhwen.domain.Operlogs">
+    insert into sys_operlogs (id, loginName, operTime, 
+      content, ip, types, 
+      orderId)
+    values (#{id,jdbcType=BIGINT}, #{loginname,jdbcType=VARCHAR}, #{opertime,jdbcType=TIMESTAMP}, 
+      #{content,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, #{types,jdbcType=INTEGER}, 
+      #{orderid,jdbcType=BIGINT})
+  </insert>
+    <insert id="insertSelective" parameterType="top.zhwen.domain.Operlogs">
+        insert into sys_operlogs
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="loginname != null">
+                loginName,
+            </if>
+            <if test="opertime != null">
+                operTime,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="ip != null">
+                ip,
+            </if>
+            <if test="types != null">
+                types,
+            </if>
+            <if test="orderid != null">
+                orderId,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="loginname != null">
+                #{loginname,jdbcType=VARCHAR},
+            </if>
+            <if test="opertime != null">
+                #{opertime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="ip != null">
+                #{ip,jdbcType=VARCHAR},
+            </if>
+            <if test="types != null">
+                #{types,jdbcType=INTEGER},
+            </if>
+            <if test="orderid != null">
+                #{orderid,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertByIds" parameterType="top.zhwen.domain.Operlogs">
+        insert into sys_operlogs ( operTime,
+        content,  types,
+        orderId) values
+        <foreach collection="list" item="list" index="index" separator=",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+
+                <if test="list.opertime != null">
+                    #{list.opertime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="list.content != null">
+                    #{list.content,jdbcType=VARCHAR},
+                </if>
+                <if test="list.types != null">
+                    #{list.types,jdbcType=INTEGER},
+                </if>
+                <if test="list.orderid != null">
+                    #{list.orderid,jdbcType=BIGINT},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+    <select id="countByExample" parameterType="top.zhwen.domain.OperlogsExample" resultType="java.lang.Long">
+        select count(*) from sys_operlogs
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update sys_operlogs
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=BIGINT},
+            </if>
+            <if test="record.loginname != null">
+                loginName = #{record.loginname,jdbcType=VARCHAR},
+            </if>
+            <if test="record.opertime != null">
+                operTime = #{record.opertime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.content != null">
+                content = #{record.content,jdbcType=VARCHAR},
+            </if>
+            <if test="record.ip != null">
+                ip = #{record.ip,jdbcType=VARCHAR},
+            </if>
+            <if test="record.types != null">
+                types = #{record.types,jdbcType=INTEGER},
+            </if>
+            <if test="record.orderid != null">
+                orderId = #{record.orderid,jdbcType=BIGINT},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update sys_operlogs
+        set id = #{record.id,jdbcType=BIGINT},
+        loginName = #{record.loginname,jdbcType=VARCHAR},
+        operTime = #{record.opertime,jdbcType=TIMESTAMP},
+        content = #{record.content,jdbcType=VARCHAR},
+        ip = #{record.ip,jdbcType=VARCHAR},
+        types = #{record.types,jdbcType=INTEGER},
+        orderId = #{record.orderid,jdbcType=BIGINT}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="top.zhwen.domain.Operlogs">
+        update sys_operlogs
+        <set>
+            <if test="loginname != null">
+                loginName = #{loginname,jdbcType=VARCHAR},
+            </if>
+            <if test="opertime != null">
+                operTime = #{opertime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="ip != null">
+                ip = #{ip,jdbcType=VARCHAR},
+            </if>
+            <if test="types != null">
+                types = #{types,jdbcType=INTEGER},
+            </if>
+            <if test="orderid != null">
+                orderId = #{orderid,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="top.zhwen.domain.Operlogs">
+    update sys_operlogs
+    set loginName = #{loginname,jdbcType=VARCHAR},
+      operTime = #{opertime,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=VARCHAR},
+      ip = #{ip,jdbcType=VARCHAR},
+      types = #{types,jdbcType=INTEGER},
+      orderId = #{orderid,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

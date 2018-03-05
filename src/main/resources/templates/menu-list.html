@@ -1,0 +1,242 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="../static/assets/css/bootstrap.min.css" th:href="@{/assets/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../static/assets/css/font-awesome.min.css"
+          th:href="@{/assets/css/font-awesome.min.css}"/>
+    <!-- fonts -->
+    <!--<link rel ="stylesheet" href ="../static/assets/css/ace-font.css" />-->
+    <link rel="stylesheet" href="../static/assets/css/ace.min.css" th:href="@{/assets/css/ace.min.css}"/>
+    <title>菜单管理</title>
+</head>
+<body>
+<div class="page-content">
+    <div class="page-header">
+        <h1>
+            菜单管理
+        </h1>
+    </div><!-- /.page-header -->
+
+    <div class="row" style="height: 700px;">
+        <div class="col-xs-12">
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="widget-box">
+                        <div class="widget-header header-color-blue2">
+                            <h4 class="lighter smaller">菜单</h4>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-main padding-8">
+                                <div id="tree1" class="tree tree-selectable">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="widget-box">
+                        <div class="widget-header header-color-green2">
+                            <h4 class="lighter smaller" id="menuTitleText">菜单属性</h4>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-main padding-8">
+                                <form class="form-horizontal" role="form"  onsubmit="return false;" id="menuForm" method="post">
+                                    <div class="form-group">
+                                        <input type="hidden" name="id" id="id" value=""/>
+                                        <input type="hidden" name="checkType" id="checkType" value="0"/>
+                                        <label class="col-sm-3 control-label no-padding-right"
+                                               for="name">名称</label>
+                                        <div class="col-sm-9">
+                                            <input class="input-large" name="name" id="name"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label no-padding-right" for="Url">Url</label>
+                                        <div class="col-sm-9">
+                                            <input class="input-large" name="url" id="Url"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label no-padding-right"
+                                               for="permission">权限属性</label>
+                                        <div class="col-sm-9">
+                                            <input class="input-large" name="permission" id="permission"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" id="resourcetypeShow">
+                                        <label class="col-sm-3 control-label no-padding-right"
+                                               for="form-field-select-1">类型</label>
+                                        <div class="col-sm-9" id="typeSelect">
+                                            <select class="form-control" name="resourcetype" id="form-field-select-1" style="width: 210px">
+                                                <option value="menu" id="menu" onclick="menuStyle()">Menu</option>
+                                                <option value="button" id="button" onclick="buttonStyle()">Button</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" id="parentidShow">
+                                        <label class="col-sm-3 control-label no-padding-right"
+                                               for="parentid">父级菜单</label>
+                                        <div class="col-sm-9" id="secondSelect">
+                                            <select class="form-control" name="parentid" id="parentid" style="width: 210px">
+                                                <option value="0" >一级菜单</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" >
+                                        <label class="col-sm-3 control-label no-padding-right"
+                                               for="ico">图标 <span class="icon-unlock" id="icoShow"></span></label>
+                                        <div class="col-sm-9" >
+
+                                            <select class="form-control" name="ico" id="ico" style="width: 210px">
+                                                <option value="icon-cogs" >cogs</option>
+                                                <option value="icon-adjust">adjust</option>
+                                                <option value="icon-asterisk">asterisk</option>
+                                                <option value="icon-ban-circle">ban-circle</option>
+                                                <option value="icon-bar-chart">bar-chart</option>
+                                                <option value="icon-barcode">barcode</option>
+                                                <option value="icon-beaker">beaker</option>
+                                                <option value="icon-beer">beer</option>
+                                                <option value="icon-bell">bell</option>
+                                                <option value="icon-bell-alt">bell-alt</option>
+                                                <option value="icon-bolt">bolt</option>
+                                                <option value="icon-book">book</option>
+                                                <option value="icon-bookmark">bookmark</option>
+                                                <option value="icon-bookmark-empty">bookmark-empty</option>
+                                                <option value="icon-briefcase">briefcase</option>
+                                                <option value="icon-bullhorn">bullhorn</option>
+                                                <option value="icon-calendar">calendar</option>
+                                                <option value="icon-camera">camera</option>
+                                                <option value="icon-camera-retro">camera-retro</option>
+                                                <option value="icon-certificate">certificate</option>
+                                                <option value="icon-check">check</option>
+                                                <option value="icon-check-empty">check-empty</option>
+                                                <option value="icon-circle">circle</option>
+                                                <option value="icon-circle-blank">circle-blank</option>
+                                                <option value="icon-cloud">cloud</option>
+                                                <option value="icon-cloud-download">cloud-download</option>
+                                                <option value="icon-cloud-upload">cloud-upload</option>
+                                                <option value="icon-coffee">coffee</option>
+                                                <option value="icon-cog">cog</option>
+                                                <option value="icon-cogs">cogs</option>
+                                                <option value="icon-comment">comment</option>
+                                                <option value="icon-comment-alt">comment-alt</option>
+                                                <option value="icon-comments">comments</option>
+                                                <option value="icon-comments-alt">comments-alt</option>
+                                                <option value="icon-credit-card">credit-card</option>
+                                                <option value="icon-dashboard">dashboard</option>
+                                                <option value="icon-desktop">desktop</option>
+                                                <option value="icon-download">download</option>
+                                                <option value="icon-download-alt">download-alt</option>
+                                                <option value="icon-edit">edit</option>
+                                                <option value="icon-envelope">envelope</option>
+                                                <option value="icon-envelope-alt">envelope-alt</option>
+                                                <option value="icon-exchange">exchange</option>
+                                                <option value="icon-exclamation-sign">exclamation-sign</option>
+                                                <option value="icon-external-link">external-link</option>
+                                                <option value="icon-eye-close">eye-close</option>
+                                                <option value="icon-eye-open">eye-open</option>
+                                                <option value="icon-facetime-video">facetime-video</option>
+                                                <option value="icon-fighter-jet">fighter-jet</option>
+                                                <option value="icon-film">film</option>
+                                                <option value="icon-filter">filter</option>
+                                                <option value="icon-fire">fire</option>
+                                                <option value="icon-flag">flag</option>
+                                                <option value="icon-folder-close">folder-close</option>
+                                                <option value="icon-folder-open">folder-open</option>
+                                                <option value="icon-folder-close-alt">folder-close-alt</option>
+                                                <option value="icon-folder-open-alt">folder-open-alt</option>
+                                                <option value="icon-food">food</option>
+                                                <option value="icon-gift">gift</option>
+                                                <option value="icon-glass">glass</option>
+                                                <option value="icon-globe">globe</option>
+                                                <option value="icon-group">group</option>
+                                                <option value="icon-hdd">hdd</option>
+                                                <option value="icon-headphones">headphones</option>
+                                                <option value="icon-heart">heart</option>
+                                                <option value="icon-heart-empty">heart-empty</option>
+                                                <option value="icon-home">home</option>
+                                                <option value="icon-inbox">inbox</option>
+                                                <option value="icon-info-sign">info-sign</option>
+                                                <option value="icon-key">key</option>
+                                                <option value="icon-leaf">leaf</option>
+                                                <option value="icon-laptop">laptop</option>
+                                                <option value="icon-legal">legal</option>
+                                                <option value="icon-lemon">lemon</option>
+                                                <option value="icon-lightbulb">lightbulb</option>
+                                                <option value="icon-lock">lock</option>
+                                                <option value="icon-unlock">unlock</option>
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label no-padding-right"
+                                               for="sort">排序</label>
+                                        <div class="col-sm-9">
+                                            <input class="input-large" name="sort" id="sort"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" id="availableShow">
+                                        <label class="col-sm-3 control-label no-padding-right"
+                                               for="available">是否可用</label>
+                                        <div class="col-sm-9" id="availableInput">
+                                            <input id="available" name="available" value="0" onclick="if($(this).val()==0){$(this).val('1');}else{$(this).val('0')}"
+                                                   class="ace ace-switch ace-switch-7" type="checkbox"/>
+                                            <span class="lbl"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label no-padding-right"
+                                               for="available"></label>
+                                        <div class="col-sm-9">
+                                            <button class="btn btn-primary" type="button" onclick="firstButton()" id="addFirstMenu">添加菜单</button>
+                                            <button style="display: none" class="btn btn-primary" type="button" onclick="updateButton()" id="updateMenu">修改菜单</button>
+                                            <button style="display: none" class="btn btn-danger" type="button" onclick="delButton()" id="delMenu">删除菜单</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="widget-box" style="display: none" id="buttonZone">
+                        <div class="widget-header header-color-green2">
+                            <h4 class="lighter smaller">按钮列表</h4>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-main padding-8" id="buttonShow">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- PAGE CONTENT ENDS -->
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+</div>
+</body>
+<!-- basic scripts -->
+<script src="../static/assets/js/jquery-2.0.3.min.js" th:src="@{/assets/js/jquery-2.0.3.min.js}"></script>
+<script src="../static/assets/js/jquery.messager.js" th:src="@{/assets/js/jquery.messager.js}"></script>
+<script src="../static/assets/js/bootstrap.min.js" th:src="@{/assets/js/bootstrap.min.js}"></script>
+<script src="../static/assets/js/fuelux/fuelux.tree.min.js" th:src="@{/assets/js/fuelux/fuelux.tree.min.js}"></script>
+<script src="../static/assets/js/fuelux/data/fuelux.tree-sampledata.js"
+        th:src="@{/assets/js/fuelux/data/fuelux.tree-sampledata.js}"></script>
+<script src="../static/js/menu-list.js" th:src="@{/js/menu-list.js}"></script>
+
+
+
+<!-- ace scripts -->
+<script src="../static/assets/js/ace-elements.min.js" th:src="@{/assets/js/ace-elements.min.js}"></script>
+<script src="../static/assets/js/ace.min.js" th:src="@{/assets/js/ace.min.js}"></script>
+<!--<script th:src="@{/js/role-list.js}"></script>-->
+<script>
+    $(function(){
+        $("#ico > option").on("click", function(){
+            $("#icoShow").attr("class",$(this).val());
+        });
+    })
+</script>
+</html>
