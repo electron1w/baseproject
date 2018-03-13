@@ -189,7 +189,7 @@ public class MenuController {
                 Permission permission1 = new Permission();
                 permission1.setName(permission.getName());
                 List<Permission> permissions = permissionService.findByPermissions(permission1);
-                if (permissions != null && permissions.size() > 0 && permission.getId() != permissions.get(0).getId()) {
+                if (permissions != null && permissions.size() > 0 && !permission.getId().equals(permissions.get(0).getId())) {
                     return "已存在对应菜单,请重新输入!";
                 }
             }

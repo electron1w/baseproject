@@ -109,7 +109,7 @@ public class UserController {
         for (UserRole ur : userRoleList) {
             boolean success = true;
             for (String r : roleIdList) {
-                if (ur.getRoleid() == LongUtil.parseLong(r) || (adminId == uid && role.getId() == ur.getRoleid())) {
+                if (ur.getRoleid() .equals(LongUtil.parseLong(r)) || (adminId .equals(uid)  && role.getId().equals(ur.getRoleid()))) {
                     roleIdListCopy.remove(r);
                     success = false;
                     break;
