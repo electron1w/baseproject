@@ -49,7 +49,7 @@ public class ControllerInterceptor {
      * @return ErrorCode（被拦截方法的执行结果，或需要登录的错误提示。）
      *//*
 
-    @Around("controllerMethodPointcut()") //指定拦截器规则；也可以直接把“execution(* com.xjj.........)”写进这里
+    @Around("controllerMethodPointcut()") //指定拦截器规则；也可以直接把“execution(* top.zhwen.........)”写进这里
     public Object interceptor(ProceedingJoinPoint pjp) {
         long beginTime = System.currentTimeMillis();
         MethodSignature signature = (MethodSignature) pjp.getSignature();
@@ -71,7 +71,7 @@ public class ControllerInterceptor {
                 HttpServletRequest request = (HttpServletRequest) arg;
                 if (isLoginRequired(method)) {
                     if (!isLogin(request)) {
-                        //result = new JsonResult(ResultCode.NOT_LOGIN, "该操作需要登录！去登录吗？\n\n（不知道登录账号？请联系老许。）", null);
+                        //result = new JsonResult(ResultCode.NOT_LOGIN, "请登录"）", null);
                     }
                 }
                 //获取query string 或 posted form data参数
