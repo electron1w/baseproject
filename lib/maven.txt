@@ -1,1 +1,0 @@
-mvn install:install-file -Dfile=lianlianpay-security-1.0.0.jar -DgroupId=com.lianlianpay.security -DartifactId=lianlianpay-security -Dversion=1.0.0 -Dpackaging=jar
